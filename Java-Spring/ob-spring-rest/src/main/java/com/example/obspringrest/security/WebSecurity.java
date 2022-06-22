@@ -1,14 +1,10 @@
-package com.example.obspringsecurity;
-
+package com.example.obspringrest.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -24,8 +20,8 @@ public class WebSecurity {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/hello").permitAll()
-                .antMatchers("/bootstrap").hasRole("USER")
+                .antMatchers("/saludo").permitAll()
+                .antMatchers("/laptops/**").hasRole("USER")
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -38,12 +34,18 @@ public class WebSecurity {
 
     @Bean
     public InMemoryUserDetailsManager userDetailsService() {
-        UserDetails user = User.withDefaultPasswordEncoder()
+        User.UserBuilder users = User.withDefaultPasswordEncoder();
+        User user = (User) users
                 .username("user")
                 .password("password")
                 .roles("USER")
                 .build();
-        return new InMemoryUserDetailsManager(user);
+        User admin = (User) users
+                .username("admin")
+                .password("password")
+                .roles("USER","ADMIN")
+                .build();
+        return new InMemoryUserDetailsManager(user,admin);
     }
 
 
@@ -56,5 +58,4 @@ public class WebSecurity {
         firewall.setAllowSemicolon(true);
         return firewall;
     }
-
 }
