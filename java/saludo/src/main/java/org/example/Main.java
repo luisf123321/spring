@@ -16,8 +16,8 @@ public class Main {
         float num5 = 3.4f;
         Funciones funciones = new Funciones();
 
-        funciones.getPrice(200);
-
+        double resultado = funciones.getPrice(200);
+        System.out.println(resultado);
 
     }
 }
