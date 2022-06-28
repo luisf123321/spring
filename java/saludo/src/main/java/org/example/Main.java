@@ -14,7 +14,9 @@ public class Main {
 
         double num4 = 3.3;
         float num5 = 3.4f;
+        Funciones funciones = new Funciones();
 
+        funciones.getPrice(200);
 
 
     }
