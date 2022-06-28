@@ -19,5 +19,12 @@ public class Main {
         double resultado = funciones.getPrice(200);
         System.out.println(resultado);
 
+
+        String[] nombres = {"luis", "juan", "carlos", "pedro"};
+        for(String nombre:nombres){
+            System.out.print(nombre + ", ");
+
+        }
+
     }
 }
